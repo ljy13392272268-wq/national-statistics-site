@@ -42,6 +42,7 @@
     <div class="toolbar">
       <input type="search" id="data-search" placeholder="Search indicators — try “life” or “GDP”" aria-label="Search indicators">
       <button type="button" id="download-csv">Download CSV</button>
+      <span class="count" id="data-count"></span>
     </div>
     <div class="filter-row" role="group" aria-label="Filter by section">
       <button type="button" data-section="all" aria-pressed="true">All</button>
@@ -62,7 +63,6 @@
     <p class="source-line">Source: World Bank Open Data, country USA, 2015–2024. Values are
     rounded for display; the CSV download carries the full figures. A dash
     means the source has no value for that year.</p>
-    <p class="source-line" id="data-count"></p>
   </section>
 
   <div class="note"><strong>How to read the change column.</strong> For indicators measured

@@ -97,8 +97,8 @@
   <section class="section">
     <h2>Education data</h2>
     <p>Not every education series is reported every year. The table below
-    shows what the World Bank holds for the United States, with gaps left
-    blank rather than filled in.</p>
+    shows what the World Bank holds for the United States, with gaps shown
+    as dashes rather than filled in.</p>
     <div class="table-scroll" id="edu-table"></div>
     <p class="source-line">Source: World Bank Open Data. Enrolment figures are last reported
     for 2022; education spending for 2021; the pupil–teacher ratios for
@@ -126,7 +126,7 @@
   C.lineChart(document.getElementById("tertiary-chart"), {
     label: "School enrollment, tertiary, percent gross, 2015-2022",
     series: [{ name: "Tertiary enrolment", values: D.INDICATORS.tertiaryEnroll.values, color: "#b3402a" }],
-    tickFormat: function (v) { return v.toFixed(0) + "%"; }
+    tickFormat: function (v) { return C.pctTick(v); }
   });
   C.lineChart(document.getElementById("school-chart"), {
     label: "School enrollment, primary and secondary, percent gross, 2015-2022",
@@ -134,7 +134,7 @@
       { name: "Primary", values: D.INDICATORS.primaryEnroll.values, color: "#1f6f6b" },
       { name: "Secondary", values: D.INDICATORS.secondaryEnroll.values, color: "#4a6fa5" }
     ],
-    tickFormat: function (v) { return v.toFixed(0) + "%"; }
+    tickFormat: function (v) { return v.toFixed(1) + "%"; }
   });
 
   S.seriesTable(document.getElementById("edu-table"),

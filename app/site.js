@@ -1,7 +1,5 @@
-// America in Numbers — shared page chrome and number formatting: the units
-// every page prints a figure in, the stat cards, and the active nav link.
-// Tables, sorting and the CSV download live in tables.js, which only the
-// pages that show a table load.
+// Shared page chrome and number formatting for every page; tables, sorting
+// and the CSV download live in tables.js, which only table pages load.
 
 // --- formatting -------------------------------------------------------------
 function fmtInt(v) {
@@ -24,12 +22,10 @@ function fmtBillionPeople(v) {
   return v === null || v === undefined ? "—" : fmtNum(v / 1e9, 2) + " billion";
 }
 function fmtMillionPeople(v) {
-  // The US population is 340 million: "0.34 billion" would read oddly,
-  // so people are shown in millions throughout this site.
   return v === null || v === undefined ? "—" : fmtNum(v / 1e6, 1) + " million";
 }
 function fmtUsdBillion(v) {
-  // state GDP is stored in million USD; show billions.
+  // State GDP is stored in million USD; show billions.
   return v === null || v === undefined ? "—" : "$" + fmtNum(v / 1000, 2) + " billion";
 }
 
@@ -54,11 +50,9 @@ function changeSinceStart(key) {
   return { from: first, to: last.value, pct: ((last.value - first) / Math.abs(first)) * 100 };
 }
 
-// --- stat cards -------------------------------------------------------------
 // Fill a stat card: <div class="stat" data-ind="population" data-fmt="millionPeople">
-// The card's .stat-value and .stat-year are filled from the data; a small
-// sparkline of the whole series is drawn behind the label when charts.js is
-// loaded, so a card shows both the latest value and its ten-year path.
+// The card's .stat-value and .stat-year come from the data; a sparkline of
+// the whole series is added when charts.js is loaded.
 function fillStatCards(root) {
   const scope = root || document;
   scope.querySelectorAll("[data-ind]").forEach((card) => {
@@ -110,7 +104,6 @@ function formatValue(key, value, fmtName) {
 }
 
 // --- navigation -------------------------------------------------------------
-// Mark the current page's nav link as active.
 function markActiveNav() {
   const page = location.pathname.split("/").pop() || "index.html";
   document.querySelectorAll(".topnav a").forEach((a) => {
@@ -118,4 +111,4 @@ function markActiveNav() {
   });
 }
 
-window.SITE = { fmtInt, fmtNum, fmtPct, fmtUsdTrillion, fmtUsd, fmtBillionPeople, fmtMillionPeople, fmtUsdBillion, latestOf, changeSinceStart, fillStatCards, formatValue, markActiveNav };
+window.SITE = { fmtInt, fmtNum, fmtUsd, fmtUsdBillion, latestOf, changeSinceStart, fillStatCards, formatValue, markActiveNav };

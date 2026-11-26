@@ -1,7 +1,5 @@
-/* America in Numbers — design system.
-   Warm paper, deep ink, one vermilion accent. System fonts only: Georgia
-   for display type, the platform sans for everything else. No webfonts,
-   no external assets, so the site works with no network at all. */
+/* America in Numbers: warm paper, ink type, one vermilion accent, system
+   fonts only, no external asset — the site works with no network. */
 
 :root {
   --paper: #faf7f1;
@@ -13,7 +11,6 @@
   --accent: #b3402a;
   --accent-dark: #8f2f1e;
   --teal: #1f6f6b;
-  --gold: #c98a1b;
   --card: #ffffff;
   --shadow: 0 1px 3px rgba(28, 43, 51, 0.10), 0 6px 18px rgba(28, 43, 51, 0.06);
   --radius: 14px;
@@ -32,7 +29,7 @@ body {
   line-height: 1.6;
 }
 
-h1, h2, h3, .display {
+h1, h2, h3 {
   font-family: Georgia, "Times New Roman", serif;
   color: var(--ink);
   line-height: 1.2;
@@ -112,12 +109,13 @@ a:hover { text-decoration: underline; }
 .masthead h1 { font-size: 38px; line-height: 1.05; margin: 6px 0 4px; }
 .masthead .lede { font-size: 17.5px; line-height: 1.45; color: var(--ink-soft); margin: 0; }
 
-/* Section pages keep the older hero, tightened. */
-.hero { padding: 20px 0 4px; }
-.hero .kicker { margin-bottom: 8px; }
-.hero h1 { font-size: 38px; margin-bottom: 6px; }
-.hero p.lede { font-size: 18px; color: var(--ink-soft); max-width: 760px; }
-.hero .meta-line { color: var(--muted); font-size: 13.5px; margin-top: 8px; }
+/* Section pages keep the older hero, tightened: at 1280x800 the first chart
+   below the cards now fits whole, so a section reads in one screen. */
+.hero { padding: 12px 0 2px; }
+.hero .kicker { margin-bottom: 4px; }
+.hero h1 { font-size: 33px; margin-bottom: 4px; }
+.hero p.lede { font-size: 17px; color: var(--ink-soft); max-width: 780px; line-height: 1.42; }
+.hero .meta-line { color: var(--muted); font-size: 13.5px; margin-top: 4px; }
 
 .section { margin-top: 36px; }
 .section > h2 { font-size: 27px; border-bottom: 3px solid var(--accent); padding-bottom: 6px; }
@@ -137,20 +135,24 @@ a:hover { text-decoration: underline; }
 .stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin: 14px 0 4px;
+  gap: 9px;
+  margin: 9px 0 2px;
 }
 .stat {
+  display: block;
   position: relative;
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: 12px;
   box-shadow: var(--shadow);
-  padding: 8px 16px 8px;
-  min-height: 88px;
+  padding: 6px 14px 5px;
+  min-height: 76px;
+  color: var(--ink);
 }
+a.stat:hover, a.stat:focus-visible { border-color: var(--accent); text-decoration: none; }
+a.stat::after { content: "→"; position: absolute; right: 12px; bottom: 7px; color: var(--accent); font-size: 14px; opacity: 0.75; }
 .stat-label { font-size: 11px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
-.stat-value { font-family: Georgia, "Times New Roman", serif; font-size: 28px; font-weight: 700; color: var(--ink); margin: 2px 0 0; line-height: 1.15; }
+.stat-value { font-family: Georgia, "Times New Roman", serif; font-size: 26px; font-weight: 700; color: var(--ink); margin: 2px 0 0; line-height: 1.15; }
 .stat-sub { display: inline; font-size: 12px; color: var(--ink-soft); }
 .stat-year { display: inline; font-size: 12px; color: var(--muted); }
 .stat-year::before { content: " · "; }
@@ -174,8 +176,8 @@ a:hover { text-decoration: underline; }
   border: 1px solid var(--line);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: 12px 18px;
-  margin: 14px 0;
+  padding: 9px 16px;
+  margin: 9px 0;
 }
 .panel h3 { font-size: 20px; margin-bottom: 2px; }
 .panel .panel-sub { color: var(--ink-soft); font-size: 14.5px; margin: 0 0 6px; }
@@ -213,11 +215,8 @@ button {
   cursor: pointer;
 }
 button:hover { background: var(--accent-dark); }
-button.ghost { background: #fff; color: var(--accent); }
-button.ghost:hover { background: #fbeeea; }
 button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); }
-/* Toggle buttons (chart metric, table filters) read as options, not calls
-   to action: unpressed ones are quiet, pressed one is ink. */
+/* Toggle buttons read as options: unpressed ones quiet, the pressed one ink. */
 .chart-switch button, .filter-row button { background: #fff; color: var(--accent); border-color: var(--line); }
 .chart-switch button:hover, .filter-row button:hover { background: #fbeeea; border-color: var(--accent); }
 .chart-switch button[aria-pressed="true"], .filter-row button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
@@ -257,7 +256,7 @@ button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); 
 /* --- tables -------------------------------------------------------------- */
 .table-scroll { overflow-x: auto; margin: 14px 0; border-radius: var(--radius); border: 1px solid var(--line); }
 table.data-table { width: 100%; border-collapse: collapse; background: #fff; font-size: 15px; min-width: 640px; }
-.data-table th, .data-table td { padding: 9px 12px; text-align: left; border-bottom: 1px solid #eee6d6; }
+.data-table th, .data-table td { padding: 6px 12px; text-align: left; border-bottom: 1px solid #eee6d6; line-height: 1.45; }
 .data-table thead th { background: var(--ink); color: #f2ede1; font-weight: 600; white-space: nowrap; position: sticky; top: 0; }
 .data-table tbody tr:nth-child(even) { background: #fbf8f1; }
 .data-table td.num, .data-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
@@ -269,9 +268,10 @@ table.data-table { width: 100%; border-collapse: collapse; background: #fff; fon
 .data-table th.sortable::after { content: " ↕"; font-size: 12px; opacity: 0.7; }
 .data-table th[data-dir="asc"]::after { content: " ↑"; }
 .data-table th[data-dir="desc"]::after { content: " ↓"; }
-.toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 14px 0; }
+.toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 10px 0; }
 .toolbar input[type="search"] { flex: 1; min-width: 200px; }
-.filter-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.toolbar .count { margin-left: auto; color: var(--muted); font-size: 13px; }
+.filter-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 2px; }
 
 /* --- footer -------------------------------------------------------------- */
 footer {
@@ -299,13 +299,15 @@ footer .to-top { float: right; }
   .masthead .dateline { font-size: 10px; letter-spacing: 0.04em; }
   .masthead h1 { font-size: 31px; margin: 2px 0 3px; }
   .masthead .lede { display: none; }
-  .hero { padding-top: 16px; }
-  .hero h1 { font-size: 31px; }
-  .hero p.lede { font-size: 16.5px; }
+  .hero { padding-top: 10px; }
+  .hero h1 { font-size: 30px; }
+  .hero p.lede { font-size: 16px; }
   .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-  .stat { padding: 8px 11px 7px; min-height: 96px; }
+  .stat { padding: 8px 11px 7px; min-height: 94px; }
   .stat-value { font-size: 23px; }
   .stat-sub, .stat-year { font-size: 11.5px; }
+  .stat-year { display: block; }
+  .stat-year::before { content: ""; }
   .stat-spark, .stat-source { display: none; }
   .stats-note { display: block; font-size: 11.5px; color: var(--muted); margin: 4px 2px 0; }
   .topbar-inner { gap: 4px; padding: 5px 12px; }

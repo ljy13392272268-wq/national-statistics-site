@@ -104,6 +104,7 @@
     <p class="panel-sub">Urban population as a share of the total, 2015–2024: it has hovered
     near 80% all decade, at 80.1% in 2024. The fertility rate fell over
     the same years, from 1.84 to 1.63 births per woman.</p>
+    <div class="chart-legend"><span><i style="background:#1f6f6b"></i>Urban population, % of total</span><span><i style="background:#c98a1b"></i>Fertility rate, births per woman</span></div>
     <div id="urban-chart"></div>
     <div id="fertility-chart"></div>
     <p class="source-line">Source: World Bank Open Data, indicators SP.URB.TOTL.IN.ZS and
@@ -154,12 +155,12 @@
   C.lineChart(document.getElementById("urban-chart"), {
     label: "Urban population, percent of total, 2015-2024",
     series: [{ name: "Urban population", values: D.INDICATORS.urbanPct.values, color: "#1f6f6b" }],
-    tickFormat: function (v) { return v.toFixed(0) + "%"; }
+    tickFormat: function (v) { return v.toFixed(1) + "%"; }
   });
   C.lineChart(document.getElementById("fertility-chart"), {
     label: "Fertility rate, births per woman, 2015-2024",
     series: [{ name: "Fertility rate", values: D.INDICATORS.fertility.values, color: "#c98a1b" }],
-    tickFormat: function (v) { return v.toFixed(1); }
+    tickFormat: function (v) { return v.toFixed(2); }
   });
 
   S.seriesTable(document.getElementById("pop-table"),

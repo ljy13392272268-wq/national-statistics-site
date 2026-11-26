@@ -40,50 +40,50 @@
   </section>
 
   <section class="stats" aria-label="Key figures">
-    <div class="stat" data-ind="population" data-fmt="millionPeople">
+    <a class="stat" href="population.html" data-ind="population" data-fmt="millionPeople">
       <div class="stat-label">Population</div>
       <div class="stat-value">—</div>
       <div class="stat-sub">people</div>
       <div class="stat-year"></div>
       <div class="stat-source">World Bank</div>
-    </div>
-    <div class="stat" data-ind="gdp" data-fmt="usdTrillion">
+    </a>
+    <a class="stat" href="economy.html" data-ind="gdp" data-fmt="usdTrillion">
       <div class="stat-label">GDP</div>
       <div class="stat-value">—</div>
       <div class="stat-sub">current US$</div>
       <div class="stat-year"></div>
       <div class="stat-source">World Bank</div>
-    </div>
-    <div class="stat" data-ind="gdpPc" data-fmt="usd">
+    </a>
+    <a class="stat" href="economy.html" data-ind="gdpPc" data-fmt="usd">
       <div class="stat-label">GDP per capita</div>
       <div class="stat-value">—</div>
       <div class="stat-sub">current US$</div>
       <div class="stat-year"></div>
       <div class="stat-source">World Bank</div>
-    </div>
-    <div class="stat" data-ind="lifeExp" data-fmt="num1">
+    </a>
+    <a class="stat" href="health.html" data-ind="lifeExp" data-fmt="num1">
       <div class="stat-label">Life expectancy</div>
       <div class="stat-value">—</div>
       <div class="stat-sub">years at birth</div>
       <div class="stat-year"></div>
       <div class="stat-source">World Bank</div>
-    </div>
-    <div class="stat" data-ind="urbanPct" data-fmt="pct1">
+    </a>
+    <a class="stat" href="population.html" data-ind="urbanPct" data-fmt="pct1">
       <div class="stat-label">Urban population</div>
       <div class="stat-value">—</div>
       <div class="stat-sub">share of population</div>
       <div class="stat-year"></div>
       <div class="stat-source">World Bank</div>
-    </div>
-    <div class="stat" data-ind="co2Pc" data-fmt="num1" data-color="#1f6f6b">
+    </a>
+    <a class="stat" href="environment.html" data-ind="co2Pc" data-fmt="num1" data-color="#1f6f6b">
       <div class="stat-label">CO2 per capita</div>
       <div class="stat-value">—</div>
       <div class="stat-sub">tonnes CO2e/person</div>
       <div class="stat-year"></div>
       <div class="stat-source">World Bank</div>
-    </div>
+    </a>
   </section>
-  <p class="stats-note">Key figures: World Bank Open Data · year shown on each card.</p>
+  <p class="stats-note">World Bank Open Data · each card opens its section.</p>
 
   <section class="panel panel-chart">
     <div class="panel-head">
@@ -185,8 +185,8 @@
 
   var METRICS = {
     population: { name: "Population", fmt: function (v) { return (v / 1e6).toFixed(0) + "M"; } },
-    urbanPct: { name: "Urban population, %", fmt: function (v) { return v.toFixed(0) + "%"; } },
-    lifeExp: { name: "Life expectancy, years", fmt: function (v) { return v.toFixed(0); } },
+    urbanPct: { name: "Urban population, %", fmt: function (v) { return v.toFixed(1) + "%"; } },
+    lifeExp: { name: "Life expectancy, years", fmt: function (v) { return Math.abs(v - Math.round(v)) < 1e-6 ? v.toFixed(0) : v.toFixed(1); } },
     gdpPc: { name: "GDP per capita, US$", fmt: function (v) { return "$" + Math.round(v).toLocaleString("en-US"); } }
   };
   var GLANCE_FMT = { fertility: "num2" };
@@ -244,7 +244,7 @@
     }
     var tr = document.createElement("tr");
     tr.innerHTML = "<td>" + ind.label + "</td><td class=\"num\"><strong>" +
-      S.formatValue(key, latest.value, GLANCE_FMT[key] || "auto") + "</strong> " + unitLabel(ind) +
+      S.formatValue(key, latest.value, GLANCE_FMT[key] || "auto") + "</strong> · " + unitLabel(ind) +
       "</td><td class=\"num\">" + latest.year + "</td><td class=\"num" + tone + "\">" + changeText +
       "</td><td>World Bank</td>";
     tbody.appendChild(tr);

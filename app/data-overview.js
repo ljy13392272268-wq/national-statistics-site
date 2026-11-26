@@ -1,13 +1,5 @@
-// America in Numbers — the overview page's data only.
-//
-// This is the same data as data.js, cut down to the ten indicators the
-// overview page (index.html) actually shows: the six headline cards, the
-// three extra cards, the trend chart's four switchable series, the GDP
-// bar chart, the new GDP-growth line chart, and the "at a glance" table.
-// Every value below is copied verbatim from data.js (same World Bank
-// series, same years 2015-2024); nothing is re-fetched or rounded here.
-// The other pages keep loading the full data.js; only the overview loads
-// this file, so its first load stays small.
+// The overview page's data: the ten indicators index.html shows, copied
+// verbatim from data.js (World Bank, country USA, 2015-2024).
 
 const YEARS = [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024];
 

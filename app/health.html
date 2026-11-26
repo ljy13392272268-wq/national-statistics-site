@@ -141,7 +141,7 @@
       { name: "Female", values: D.INDICATORS.lifeExpF.values, color: "#1f6f6b" },
       { name: "Male", values: D.INDICATORS.lifeExpM.values, color: "#4a6fa5" }
     ],
-    tickFormat: function (v) { return v.toFixed(0); }
+    tickFormat: function (v) { return Math.abs(v - Math.round(v)) < 1e-6 ? v.toFixed(0) : v.toFixed(1); }
   });
   C.lineChart(document.getElementById("mort-chart"), {
     label: "Mortality, per 1,000 live births, 2015-2024",
@@ -149,7 +149,7 @@
       { name: "Infant", values: D.INDICATORS.infantMort.values, color: "#b3402a" },
       { name: "Under-5", values: D.INDICATORS.under5Mort.values, color: "#1f6f6b" }
     ],
-    tickFormat: function (v) { return v.toFixed(0); }
+    tickFormat: function (v) { return v.toFixed(1); }
   });
   C.lineChart(document.getElementById("hexp-chart"), {
     label: "Current health expenditure, percent of GDP, 2015-2023",
