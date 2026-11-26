@@ -1,0 +1,234 @@
+/* America in Numbers — design system.
+   Warm paper, deep ink, one vermilion accent. System fonts only: Georgia
+   for display type, the platform sans for everything else. No webfonts,
+   no external assets, so the site works with no network at all. */
+
+:root {
+  --paper: #faf7f1;
+  --paper-soft: #f3eee3;
+  --ink: #1c2b33;
+  --ink-soft: #43545c;
+  --muted: #66767d;
+  --line: #ddd5c4;
+  --accent: #b3402a;
+  --accent-dark: #8f2f1e;
+  --teal: #1f6f6b;
+  --gold: #c98a1b;
+  --card: #ffffff;
+  --shadow: 0 1px 3px rgba(28, 43, 51, 0.10), 0 6px 18px rgba(28, 43, 51, 0.06);
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+h1, h2, h3, .display {
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--ink);
+  line-height: 1.2;
+  margin: 0 0 0.4em;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* --- top bar ------------------------------------------------------------- */
+.topbar {
+  background: var(--ink);
+  color: #f2ede1;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+.topbar-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.brand {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 21px;
+  font-weight: 700;
+  color: #f2ede1;
+  white-space: nowrap;
+}
+.brand em { color: #e8a08d; font-style: normal; }
+.topnav {
+  display: flex;
+  gap: 2px;
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+.topnav a {
+  color: #cfd8da;
+  font-size: 14.5px;
+  padding: 7px 11px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+.topnav a:hover { color: #fff; background: rgba(255, 255, 255, 0.10); text-decoration: none; }
+.topnav a.active { color: #fff; background: var(--accent); }
+
+/* --- page shell ---------------------------------------------------------- */
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px 64px; }
+.hero { padding: 44px 0 8px; }
+.hero .kicker {
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+.hero h1 { font-size: 46px; margin-bottom: 12px; }
+.hero p.lede { font-size: 19px; color: var(--ink-soft); max-width: 720px; }
+.hero .meta-line { color: var(--muted); font-size: 14px; margin-top: 14px; }
+
+.section { margin-top: 44px; }
+.section > h2 { font-size: 29px; border-bottom: 3px solid var(--accent); padding-bottom: 8px; }
+.section > p { color: var(--ink-soft); max-width: 760px; }
+.note {
+  background: var(--paper-soft);
+  border-left: 4px solid var(--teal);
+  padding: 12px 16px;
+  border-radius: 0 10px 10px 0;
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin: 18px 0;
+}
+.source-line { color: var(--muted); font-size: 13.5px; margin-top: 10px; }
+
+/* --- stat cards ---------------------------------------------------------- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 22px 0;
+}
+.stat {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px 20px;
+}
+.stat-label { font-size: 13.5px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+.stat-value { font-family: Georgia, "Times New Roman", serif; font-size: 34px; font-weight: 700; color: var(--ink); margin: 6px 0 2px; line-height: 1.1; }
+.stat-sub { font-size: 14px; color: var(--ink-soft); }
+.stat-year { font-size: 13px; color: var(--muted); }
+
+/* --- chart panels -------------------------------------------------------- */
+.panel {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px 22px;
+  margin: 18px 0;
+}
+.panel h3 { font-size: 21px; }
+.panel .panel-sub { color: var(--ink-soft); font-size: 15px; margin-bottom: 8px; }
+.chart-legend { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 6px; font-size: 14px; color: var(--ink-soft); }
+.chart-legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.chart-switch { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 10px; }
+.chart-switch label { font-weight: 600; font-size: 15px; }
+select, input[type="text"], input[type="search"] {
+  font: inherit;
+  font-size: 15px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+}
+button {
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+}
+button:hover { background: var(--accent-dark); }
+button.ghost { background: #fff; color: var(--accent); }
+button.ghost:hover { background: #fbeeea; }
+button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); }
+/* Toggle buttons (chart metric, table filters) read as options, not calls
+   to action: unpressed ones are quiet, pressed one is ink. */
+.chart-switch button, .filter-row button { background: #fff; color: var(--accent); border-color: var(--line); }
+.chart-switch button:hover, .filter-row button:hover { background: #fbeeea; border-color: var(--accent); }
+.chart-switch button[aria-pressed="true"], .filter-row button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+/* --- link cards ---------------------------------------------------------- */
+.link-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 18px 0; }
+.link-card {
+  display: block;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px 20px;
+  color: var(--ink);
+}
+.link-card:hover { text-decoration: none; border-color: var(--accent); }
+.link-card h3 { font-size: 20px; margin-bottom: 4px; }
+.link-card p { margin: 0; color: var(--ink-soft); font-size: 15px; }
+.link-card .go { color: var(--accent); font-weight: 700; font-size: 14px; margin-top: 10px; display: block; }
+
+/* --- tables -------------------------------------------------------------- */
+.table-scroll { overflow-x: auto; margin: 14px 0; border-radius: var(--radius); border: 1px solid var(--line); }
+table.data-table { width: 100%; border-collapse: collapse; background: #fff; font-size: 15px; min-width: 640px; }
+.data-table th, .data-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #eee6d6; }
+.data-table thead th { background: var(--ink); color: #f2ede1; font-weight: 600; white-space: nowrap; position: sticky; top: 0; }
+.data-table tbody tr:nth-child(even) { background: #fbf8f1; }
+.data-table td.num, .data-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.data-table th.sortable { cursor: pointer; }
+.data-table th.sortable::after { content: " ↕"; font-size: 12px; opacity: 0.7; }
+.data-table th[data-dir="asc"]::after { content: " ↑"; }
+.data-table th[data-dir="desc"]::after { content: " ↓"; }
+.toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 14px 0; }
+.toolbar input[type="search"] { flex: 1; min-width: 200px; }
+.filter-row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* --- footer -------------------------------------------------------------- */
+footer {
+  border-top: 1px solid var(--line);
+  margin-top: 56px;
+  padding: 26px 0 10px;
+  color: var(--muted);
+  font-size: 14.5px;
+}
+footer .to-top { float: right; }
+
+/* --- phones -------------------------------------------------------------- */
+@media (max-width: 760px) {
+  body { font-size: 16px; }
+  .hero { padding-top: 28px; }
+  .hero h1 { font-size: 33px; }
+  .hero p.lede { font-size: 17px; }
+  .stats, .link-grid { grid-template-columns: 1fr; }
+  .stat-value { font-size: 29px; }
+  .topbar-inner { gap: 8px; padding: 8px 14px; }
+  .topnav { overflow-x: auto; flex-wrap: nowrap; margin-left: 0; width: 100%; padding-bottom: 4px; }
+  .wrap { padding: 0 14px 48px; }
+  .panel { padding: 16px; }
+  .section > h2 { font-size: 25px; }
+  table.data-table { min-width: 560px; }
+}

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Population — America in Numbers</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.png" type="image/png">
+<script src="data.js"></script>
+<script src="charts.js"></script>
+<script src="site.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">America <em>in Numbers</em></a>
+    <nav class="topnav">
+      <a href="index.html">Overview</a>
+      <a href="population.html">Population</a>
+      <a href="economy.html">Economy</a>
+      <a href="health.html">Health</a>
+      <a href="education.html">Education</a>
+      <a href="environment.html">Environment</a>
+      <a href="states.html">States</a>
+      <a href="data.html">Data table</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="kicker">Population</div>
+    <h1>340 million people — and still growing</h1>
+    <p class="lede">The population rose from 321.82 million in 2015 to 340.00 million in
+    2024. Growth slowed to 0.16% in 2021, the slowest year in the series,
+    then rebounded to 0.96% in 2024. The population is also ageing: the
+    share aged 65 and above rose from 14.3% in 2015 to 17.9% in 2024, while
+    the fertility rate fell to 1.63 births per woman.</p>
+    <p class="meta-line">Source: World Bank Open Data, 2015–2024.</p>
+  </section>
+
+  <section class="stats" aria-label="Key population figures">
+    <div class="stat" data-ind="population" data-fmt="millionPeople">
+      <div class="stat-label">Population</div>
+      <div class="stat-value">—</div>
+      <div class="stat-sub">people</div>
+      <div class="stat-year"></div>
+    </div>
+    <div class="stat" data-ind="popGrowth" data-fmt="pct2">
+      <div class="stat-label">Population growth</div>
+      <div class="stat-value">—</div>
+      <div class="stat-sub">per year</div>
+      <div class="stat-year"></div>
+    </div>
+    <div class="stat" data-ind="urbanPct" data-fmt="pct1">
+      <div class="stat-label">Urban population</div>
+      <div class="stat-value">—</div>
+      <div class="stat-sub">share of total population</div>
+      <div class="stat-year"></div>
+    </div>
+    <div class="stat" data-ind="age65" data-fmt="pct1">
+      <div class="stat-label">Aged 65 and above</div>
+      <div class="stat-value">—</div>
+      <div class="stat-sub">share of total population</div>
+      <div class="stat-year"></div>
+    </div>
+    <div class="stat" data-ind="fertility" data-fmt="num2">
+      <div class="stat-label">Fertility rate</div>
+      <div class="stat-value">—</div>
+      <div class="stat-sub">births per woman</div>
+      <div class="stat-year"></div>
+    </div>
+    <div class="stat" data-ind="density" data-fmt="num1">
+      <div class="stat-label">Population density</div>
+      <div class="stat-value">—</div>
+      <div class="stat-sub">people per sq. km of land</div>
+      <div class="stat-year"></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>Still growing</h3>
+    <p class="panel-sub">Total population, 2015–2024. Growth slowed through the decade to
+    0.16% in 2021, then rebounded to 0.96% in 2024 — the fastest year in
+    the series.</p>
+    <div id="pop-chart"></div>
+    <p class="source-line">Source: World Bank Open Data, indicator SP.POP.TOTL, 2015–2024.</p>
+  </section>
+
+  <section class="panel">
+    <h3>An older country</h3>
+    <p class="panel-sub">Age structure in 2015 and in 2024. The working-age share fell from
+    66.5% to 64.7%; the 65-and-over share rose from 14.3% to 17.9%.</p>
+    <div id="age-2015"></div>
+    <div id="age-2024"></div>
+    <p class="source-line">Source: World Bank Open Data, indicators SP.POP.0014.TO.ZS,
+    SP.POP.1564.TO.ZS and SP.POP.65UP.TO.ZS.</p>
+  </section>
+
+  <section class="panel">
+    <h3>Four in five live in cities</h3>
+    <p class="panel-sub">Urban population as a share of the total, 2015–2024: it has hovered
+    near 80% all decade, at 80.1% in 2024. The fertility rate fell over
+    the same years, from 1.84 to 1.63 births per woman.</p>
+    <div id="urban-chart"></div>
+    <div id="fertility-chart"></div>
+    <p class="source-line">Source: World Bank Open Data, indicators SP.URB.TOTL.IN.ZS and
+    SP.DYN.TFRT.IN, 2015–2024.</p>
+  </section>
+
+  <section class="section">
+    <h2>Population data, 2015–2024</h2>
+    <div class="table-scroll" id="pop-table"></div>
+    <p class="source-line">Source: World Bank Open Data. Population is shown in millions;
+    growth, urban share and age shares are percentages.</p>
+  </section>
+
+  <div class="note"><strong>Reading the numbers.</strong> Births fell from 12.4 per 1,000
+  people in 2015 to 10.6 in 2024, while deaths rose from 8.44 to 9.0 per
+  1,000 — and spiked to 10.4 in 2021, the pandemic year. That spike is why
+  population growth nearly stopped in 2021 before rebounding.</div>
+
+  <footer>
+    <a class="to-top" href="#">Back to top ↑</a>
+    <p><strong>America in Numbers.</strong> National figures: World Bank Open Data,
+    2015–2024. Values are rounded for display only.</p>
+  </footer>
+</main>
+
+<script>
+(function () {
+  var S = window.SITE, C = window.CHARTS, D = window.USA;
+  S.markActiveNav();
+  S.fillStatCards(document);
+
+  C.lineChart(document.getElementById("pop-chart"), {
+    label: "Population, total, 2015-2024",
+    series: [{ name: "Population", values: D.INDICATORS.population.values, color: "#b3402a" }],
+    tickFormat: function (v) { return (v / 1e6).toFixed(0) + "M"; }
+  });
+
+  function ageParts(yearIndex) {
+    return [
+      { label: "Ages 0-14", value: D.INDICATORS.age014.values[yearIndex], color: "#1f6f6b" },
+      { label: "Ages 15-64", value: D.INDICATORS.age1564.values[yearIndex], color: "#4a6fa5" },
+      { label: "Ages 65+", value: D.INDICATORS.age65.values[yearIndex], color: "#b3402a" }
+    ];
+  }
+  C.stackedBar(document.getElementById("age-2015"), { title: "Age structure", year: 2015, parts: ageParts(0) });
+  C.stackedBar(document.getElementById("age-2024"), { title: "Age structure", year: 2024, parts: ageParts(9) });
+
+  C.lineChart(document.getElementById("urban-chart"), {
+    label: "Urban population, percent of total, 2015-2024",
+    series: [{ name: "Urban population", values: D.INDICATORS.urbanPct.values, color: "#1f6f6b" }],
+    tickFormat: function (v) { return v.toFixed(0) + "%"; }
+  });
+  C.lineChart(document.getElementById("fertility-chart"), {
+    label: "Fertility rate, births per woman, 2015-2024",
+    series: [{ name: "Fertility rate", values: D.INDICATORS.fertility.values, color: "#c98a1b" }],
+    tickFormat: function (v) { return v.toFixed(1); }
+  });
+
+  S.seriesTable(document.getElementById("pop-table"),
+    ["population", "popGrowth", "urbanPct", "age65", "age014", "fertility", "birthRate", "deathRate", "density"]);
+})();
+</script>
+</body>
+</html>

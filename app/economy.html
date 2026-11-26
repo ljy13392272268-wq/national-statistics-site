@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Economy — America in Numbers</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.png" type="image/png">
+<script src="data.js"></script>
+<script src="charts.js"></script>
+<script src="site.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">America <em>in Numbers</em></a>
+    <nav class="topnav">
+      <a href="index.html">Overview</a>
+      <a href="population.html">Population</a>
+      <a href="economy.html">Economy</a>
+      <a href="health.html">Health</a>
+      <a href="education.html">Education</a>
+      <a href="environment.html">Environment</a>
+      <a href="states.html">States</a>
+      <a href="data.html">Data table</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="kicker">Economy</div>
+    <h1>A $29.30 trillion economy</h1>
+    <p class="lede">The GDP of the United States reached $29.30 trillion in 2024, growing
+    2.8% that year. GDP per person is $86,170 — the same figure adjusted
+    for purchasing power, because the dollar is the PPP reference currency.
+    Prices rose 2.9% in 2024, after 8.0% in 2022, and trade is worth 25.0%
+    of GDP.</p>
+    <p class="meta-line">Source: World Bank Open Data, 2015–2024.</p>
+  </section>
+
+  <section class="stats" aria-label="Key economic figures">
+    <div class="stat" data-ind="gdp" data-fmt="usdTrillion">
+      <div class="stat-label">GDP</div>
+      <div class="stat-value">—</div>
+      <div class="stat-sub">current US dollars</div>
+      <div class="stat-year"></div>
+    </div>
+    <div class="stat" data-ind="gdpGrowth" data-fmt="pct1">
+      <div class="stat-label">GDP growth</div>
+      <div class="stat-value">—</div>
+      <div class="stat-sub">per year</div>
+      <div class="stat-year"></div>
+    </div>
+    <div class="stat" data-ind="gdpPc" data-fmt="usd">
+      <div class="stat-label">GDP per capita</div>
+      <div class="stat-value">—</div>
+      <div class="stat-sub">current US dollars</div>
+      <div class="stat-year"></div>
+    </div>
+    <div class="stat" data-ind="gdpPcPpp" data-fmt="usd">
+      <div class="stat-label">GDP per capita, PPP</div>
+      <div class="stat-value">—</div>
+      <div class="stat-sub">current international dollars</div>
+      <div class="stat-year"></div>
+    </div>
+    <div class="stat" data-ind="cpi" data-fmt="pct2">
+      <div class="stat-label">Inflation</div>
+      <div class="stat-value">—</div>
+      <div class="stat-sub">consumer prices, per year</div>
+      <div class="stat-year"></div>
+    </div>
+    <div class="stat" data-ind="unemployment" data-fmt="pct1">
+      <div class="stat-label">Unemployment</div>
+      <div class="stat-value">—</div>
+      <div class="stat-sub">share of labour force, modelled ILO estimate</div>
+      <div class="stat-year"></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>GDP: ten years of growth</h3>
+    <p class="panel-sub">GDP in current US dollars, 2015–2024. The economy grew from $18.30
+    trillion to $29.30 trillion — with a dip to $21.38 trillion in the
+    pandemic year 2020, then a sharp rebound to $23.73 trillion in 2021.</p>
+    <div id="gdp-chart"></div>
+    <p class="source-line">Source: World Bank Open Data, indicator NY.GDP.MKTP.CD, 2015–2024.</p>
+  </section>
+
+  <section class="panel">
+    <h3>Growth, and the inflation spike</h3>
+    <p class="panel-sub">Real GDP growth, 2015–2024. Growth ran near 2–3% until 2019, fell
+    to −2.1% in 2020, rebounded to 6.2% in 2021, and settled near 2.5–2.9%
+    after that. Inflation stayed below 2.5% until 2020, then jumped to 8.0%
+    in 2022 before easing to 2.9% in 2024.</p>
+    <div id="growth-chart"></div>
+    <div id="cpi-chart"></div>
+    <p class="source-line">Source: World Bank Open Data, indicators NY.GDP.MKTP.KD.ZG and
+    FP.CPI.TOTL.ZG, 2015–2024.</p>
+  </section>
+
+  <section class="panel">
+    <h3>Richer per person, and trading less</h3>
+    <p class="panel-sub">GDP per capita rose from $56,849 in 2015 to $86,170 in 2024. Trade —
+    exports plus imports — slipped from 27.7% of GDP to 25.0%; in 2024
+    exports were 11.0% of GDP and imports 14.0%.</p>
+    <div id="gdppc-chart"></div>
+    <div id="trade-chart"></div>
+    <p class="source-line">Source: World Bank Open Data, indicators NY.GDP.PCAP.CD and
+    NE.TRD.GNFS.ZS, 2015–2024.</p>
+  </section>
+
+  <section class="section">
+    <h2>Economy data, 2015–2024</h2>
+    <div class="table-scroll" id="econ-table"></div>
+    <p class="source-line">Source: World Bank Open Data. GDP is shown in US$ trillions;
+    GDP per capita in US dollars; the rest in percent.</p>
+  </section>
+
+  <div class="note"><strong>Reading the numbers.</strong> GDP in current dollars mixes real
+  growth with price moves — that is why 2021 and 2022 look so steep. The
+  growth chart above is the real (inflation-adjusted) rate. And the PPP
+  figure is identical to the market-rate figure for the United States:
+  the US dollar is the reference currency for purchasing-power parity, so
+  the two series coincide by construction.</div>
+
+  <footer>
+    <a class="to-top" href="#">Back to top ↑</a>
+    <p><strong>America in Numbers.</strong> National figures: World Bank Open Data,
+    2015–2024. Values are rounded for display only.</p>
+  </footer>
+</main>
+
+<script>
+(function () {
+  var S = window.SITE, C = window.CHARTS, D = window.USA;
+  S.markActiveNav();
+  S.fillStatCards(document);
+
+  C.barChart(document.getElementById("gdp-chart"), {
+    label: "GDP, current US dollars, 2015-2024",
+    values: D.INDICATORS.gdp.values,
+    color: "#1f6f6b",
+    showValues: false,
+    tickFormat: function (v) { return "$" + (v / 1e12).toFixed(0) + "T"; }
+  });
+  C.lineChart(document.getElementById("growth-chart"), {
+    label: "GDP growth, annual percent, 2015-2024",
+    series: [{ name: "GDP growth", values: D.INDICATORS.gdpGrowth.values, color: "#b3402a" }],
+    tickFormat: function (v) { return v.toFixed(0) + "%"; }
+  });
+  C.lineChart(document.getElementById("cpi-chart"), {
+    label: "Inflation, consumer prices, annual percent, 2015-2024",
+    series: [{ name: "Inflation", values: D.INDICATORS.cpi.values, color: "#c98a1b" }],
+    tickFormat: function (v) { return v.toFixed(0) + "%"; }
+  });
+  C.lineChart(document.getElementById("gdppc-chart"), {
+    label: "GDP per capita, current US dollars, 2015-2024",
+    series: [{ name: "GDP per capita", values: D.INDICATORS.gdpPc.values, color: "#4a6fa5" }],
+    tickFormat: function (v) { return "$" + Math.round(v).toLocaleString("en-US"); }
+  });
+  C.lineChart(document.getElementById("trade-chart"), {
+    label: "Trade, percent of GDP, 2015-2024",
+    series: [
+      { name: "Trade", values: D.INDICATORS.tradePct.values, color: "#b3402a" },
+      { name: "Exports", values: D.INDICATORS.exportsPct.values, color: "#1f6f6b" },
+      { name: "Imports", values: D.INDICATORS.importsPct.values, color: "#c98a1b" }
+    ],
+    tickFormat: function (v) { return v.toFixed(0) + "%"; }
+  });
+
+  S.seriesTable(document.getElementById("econ-table"),
+    ["gdp", "gdpGrowth", "gdpPc", "gdpPcPpp", "cpi", "tradePct", "exportsPct", "importsPct", "savingsPct", "unemployment", "gniPc"]);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data table — America in Numbers</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.png" type="image/png">
+<script src="data.js"></script>
+<script src="charts.js"></script>
+<script src="site.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">America <em>in Numbers</em></a>
+    <nav class="topnav">
+      <a href="index.html">Overview</a>
+      <a href="population.html">Population</a>
+      <a href="economy.html">Economy</a>
+      <a href="health.html">Health</a>
+      <a href="education.html">Education</a>
+      <a href="environment.html">Environment</a>
+      <a href="states.html">States</a>
+      <a href="data.html">Data table</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="kicker">Data table</div>
+    <h1>Every indicator, in one place</h1>
+    <p class="lede">All 40 national indicators on this site: the latest value, the year
+    it belongs to, the 2015 value, and the change since. Filter by section
+    or search by name, and download the whole table as a CSV.</p>
+    <p class="meta-line">Source: World Bank Open Data, 2015–2024.</p>
+  </section>
+
+  <section class="section">
+    <div class="toolbar">
+      <input type="search" id="data-search" placeholder="Search indicators — try “life” or “GDP”" aria-label="Search indicators">
+      <button type="button" id="download-csv">Download CSV</button>
+    </div>
+    <div class="filter-row" role="group" aria-label="Filter by section">
+      <button type="button" data-section="all" aria-pressed="true">All</button>
+      <button type="button" data-section="population" aria-pressed="false">Population</button>
+      <button type="button" data-section="economy" aria-pressed="false">Economy</button>
+      <button type="button" data-section="health" aria-pressed="false">Health</button>
+      <button type="button" data-section="education" aria-pressed="false">Education</button>
+      <button type="button" data-section="environment" aria-pressed="false">Environment</button>
+    </div>
+    <div class="table-scroll">
+      <table class="data-table" id="full-table">
+        <thead>
+          <tr><th>Indicator</th><th>Unit</th><th class="num">Latest value</th><th class="num">Year</th><th class="num">2015 value</th><th class="num">Change since 2015</th><th>Source</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="source-line">Source: World Bank Open Data, country USA, 2015–2024. Values are
+    rounded for display; the CSV download carries the full figures. A dash
+    means the source has no value for that year.</p>
+    <p class="source-line" id="data-count"></p>
+  </section>
+
+  <div class="note"><strong>How to read the change column.</strong> For indicators measured
+  in percent, the change is in percentage points (for example, the urban
+  share fell 0.4 points). For everything else it is a percent change from
+  the 2015 value. Indicators with only one reported year show no change.</div>
+
+  <footer>
+    <a class="to-top" href="#">Back to top ↑</a>
+    <p><strong>America in Numbers.</strong> National figures: World Bank Open Data,
+    2015–2024. Values are rounded for display only.</p>
+  </footer>
+</main>
+
+<script>
+(function () {
+  var S = window.SITE, D = window.USA;
+  S.markActiveNav();
+
+  var sectionOf = {};
+  Object.keys(D.SECTIONS).forEach(function (sec) {
+    D.SECTIONS[sec].forEach(function (key) { sectionOf[key] = sec; });
+  });
+
+  // Alternate words people search for, beyond the indicator's own label.
+  var KEYWORDS = {
+    co2Pc: "carbon dioxide greenhouse gas",
+    gdpPcPpp: "ppp purchasing power parity",
+    tertiaryEnroll: "university college higher education",
+    secondaryEnroll: "high school middle school",
+    primaryEnroll: "elementary school",
+    pm25: "air pollution smog",
+    renewablePct: "clean energy wind solar",
+    lifeExp: "longevity lifespan",
+    infantMort: "babies child death",
+    urbanPct: "cities",
+    fertility: "births babies",
+    unemployment: "jobs jobless"
+  };
+
+  var tbody = document.querySelector("#full-table tbody");
+  Object.keys(D.INDICATORS).forEach(function (key) {
+    var ind = D.INDICATORS[key];
+    var latest = S.latestOf(key);
+    var first = ind.values[0];
+    var change = "—";
+    if (first !== null && first !== undefined && latest.value !== null) {
+      if (ind.unit.indexOf("%") !== -1) {
+        var pts = latest.value - first;
+        change = (pts >= 0 ? "+" : "") + pts.toFixed(1) + " pts";
+      } else {
+        var pct = ((latest.value - first) / Math.abs(first)) * 100;
+        change = (pct >= 0 ? "+" : "") + pct.toFixed(1) + "%";
+      }
+    }
+    var tr = document.createElement("tr");
+    tr.setAttribute("data-section", sectionOf[key] || "all");
+    if (KEYWORDS[key]) tr.setAttribute("data-keywords", KEYWORDS[key]);
+    tr.innerHTML = "<td><strong>" + ind.label + "</strong></td><td>" + ind.unit +
+      "</td><td class=\"num\"><strong>" + S.formatValue(key, latest.value, "auto") +
+      "</strong></td><td class=\"num\">" + (latest.year === null ? "—" : latest.year) +
+      "</td><td class=\"num\">" + (first === null || first === undefined ? "—" : S.formatValue(key, first, "auto")) +
+      "</td><td class=\"num\">" + change + "</td><td>World Bank</td>";
+    tbody.appendChild(tr);
+  });
+
+  var table = document.getElementById("full-table");
+  S.enableFilter(document.getElementById("data-search"), table);
+  document.getElementById("data-count").textContent =
+    Object.keys(D.INDICATORS).length + " indicators shown.";
+  document.querySelectorAll("[data-section]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var sec = btn.getAttribute("data-section");
+      document.querySelectorAll("[data-section]").forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
+      btn.setAttribute("aria-pressed", "true");
+      table.querySelectorAll("tbody tr").forEach(function (row) {
+        row.style.display = (sec === "all" || row.getAttribute("data-section") === sec) ? "" : "none";
+      });
+      document.getElementById("data-search").value = "";
+    });
+  });
+  document.getElementById("download-csv").addEventListener("click", S.downloadCsv);
+})();
+</script>
+</body>
+</html>

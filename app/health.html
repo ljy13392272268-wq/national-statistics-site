@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Health — America in Numbers</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.png" type="image/png">
+<script src="data.js"></script>
+<script src="charts.js"></script>
+<script src="site.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">America <em>in Numbers</em></a>
+    <nav class="topnav">
+      <a href="index.html">Overview</a>
+      <a href="population.html">Population</a>
+      <a href="economy.html">Economy</a>
+      <a href="health.html">Health</a>
+      <a href="education.html">Education</a>
+      <a href="environment.html">Environment</a>
+      <a href="states.html">States</a>
+      <a href="data.html">Data table</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="kicker">Health</div>
+    <h1>78.9 years — after a pandemic dip</h1>
+    <p class="lede">A child born in the United States in 2024 can expect to live 78.9
+    years: 81.4 for a girl, 76.5 for a boy. Life expectancy fell to 76.3
+    years in 2021, then recovered. Infant mortality edged down from 5.8
+    to 5.5 deaths per 1,000 live births. Health spending was 16.7% of GDP
+    in 2023, the latest year reported.</p>
+    <p class="meta-line">Source: World Bank Open Data, 2015–2024.</p>
+  </section>
+
+  <section class="stats" aria-label="Key health figures">
+    <div class="stat" data-ind="lifeExp" data-fmt="num1">
+      <div class="stat-label">Life expectancy</div>
+      <div class="stat-value">—</div>
+      <div class="stat-sub">years at birth</div>
+      <div class="stat-year"></div>
+    </div>
+    <div class="stat" data-ind="lifeExpF" data-fmt="num1">
+      <div class="stat-label">Life expectancy, female</div>
+      <div class="stat-value">—</div>
+      <div class="stat-sub">years at birth</div>
+      <div class="stat-year"></div>
+    </div>
+    <div class="stat" data-ind="lifeExpM" data-fmt="num1">
+      <div class="stat-label">Life expectancy, male</div>
+      <div class="stat-value">—</div>
+      <div class="stat-sub">years at birth</div>
+      <div class="stat-year"></div>
+    </div>
+    <div class="stat" data-ind="infantMort" data-fmt="num1">
+      <div class="stat-label">Infant mortality</div>
+      <div class="stat-value">—</div>
+      <div class="stat-sub">per 1,000 live births</div>
+      <div class="stat-year"></div>
+    </div>
+    <div class="stat" data-ind="under5Mort" data-fmt="num1">
+      <div class="stat-label">Under-5 mortality</div>
+      <div class="stat-value">—</div>
+      <div class="stat-sub">per 1,000 live births</div>
+      <div class="stat-year"></div>
+    </div>
+    <div class="stat" data-ind="healthExpPct" data-fmt="pct1">
+      <div class="stat-label">Health expenditure</div>
+      <div class="stat-value">—</div>
+      <div class="stat-sub">share of GDP</div>
+      <div class="stat-year"></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>Longer lives — with a dip</h3>
+    <p class="panel-sub">Life expectancy at birth, 2015–2024. Women live about 4.9 years
+    longer than men. It fell from 78.8 years in 2019 to 76.3 in 2021, then
+    recovered to 78.9 by 2024.</p>
+    <div id="life-chart"></div>
+    <p class="source-line">Source: World Bank Open Data, indicators SP.DYN.LE00.IN,
+    SP.DYN.LE00.FE.IN and SP.DYN.LE00.MA.IN, 2015–2024.</p>
+  </section>
+
+  <section class="panel">
+    <h3>Fewer children dying — slowly</h3>
+    <p class="panel-sub">Infant and under-5 mortality, per 1,000 live births, 2015–2024.
+    Both fell only slightly over the decade, and have been flat at 5.5 and
+    6.5 since 2019.</p>
+    <div id="mort-chart"></div>
+    <p class="source-line">Source: World Bank Open Data, indicators SP.DYN.IMRT.IN and
+    SH.DYN.MORT, 2015–2024.</p>
+  </section>
+
+  <section class="panel">
+    <h3>What health costs</h3>
+    <p class="panel-sub">Current health expenditure as a share of GDP, 2015–2023 (2024 not
+    yet reported). It spiked to 18.5% in the pandemic year 2020, then
+    settled back near 16.7%.</p>
+    <div id="hexp-chart"></div>
+    <p class="source-line">Source: World Bank Open Data, indicator SH.XPD.CHEX.GD.ZS, 2015–2023.</p>
+  </section>
+
+  <section class="section">
+    <h2>Health data, 2015–2024</h2>
+    <div class="table-scroll" id="health-table"></div>
+    <p class="source-line">Source: World Bank Open Data. Skilled birth attendance is last
+    reported for 2020 (99.1%); health spending is last reported for 2023.</p>
+  </section>
+
+  <div class="note"><strong>Modelled estimates.</strong> The mortality figures are the
+  United Nations Inter-agency Group for Child Mortality Estimation values
+  as carried by the World Bank, and the life expectancy figures are the
+  World Bank's series — they are estimates built from census and survey
+  data, not headcounts, which is why they are revised from time to time.</div>
+
+  <footer>
+    <a class="to-top" href="#">Back to top ↑</a>
+    <p><strong>America in Numbers.</strong> National figures: World Bank Open Data,
+    2015–2024. Values are rounded for display only.</p>
+  </footer>
+</main>
+
+<script>
+(function () {
+  var S = window.SITE, C = window.CHARTS, D = window.USA;
+  S.markActiveNav();
+  S.fillStatCards(document);
+
+  C.lineChart(document.getElementById("life-chart"), {
+    label: "Life expectancy at birth, years, 2015-2024",
+    series: [
+      { name: "Total", values: D.INDICATORS.lifeExp.values, color: "#b3402a" },
+      { name: "Female", values: D.INDICATORS.lifeExpF.values, color: "#1f6f6b" },
+      { name: "Male", values: D.INDICATORS.lifeExpM.values, color: "#4a6fa5" }
+    ],
+    tickFormat: function (v) { return v.toFixed(0); }
+  });
+  C.lineChart(document.getElementById("mort-chart"), {
+    label: "Mortality, per 1,000 live births, 2015-2024",
+    series: [
+      { name: "Infant", values: D.INDICATORS.infantMort.values, color: "#b3402a" },
+      { name: "Under-5", values: D.INDICATORS.under5Mort.values, color: "#1f6f6b" }
+    ],
+    tickFormat: function (v) { return v.toFixed(0); }
+  });
+  C.lineChart(document.getElementById("hexp-chart"), {
+    label: "Current health expenditure, percent of GDP, 2015-2023",
+    series: [{ name: "Health expenditure", values: D.INDICATORS.healthExpPct.values, color: "#1f6f6b" }],
+    tickFormat: function (v) { return v.toFixed(1) + "%"; }
+  });
+
+  S.seriesTable(document.getElementById("health-table"),
+    ["lifeExp", "lifeExpF", "lifeExpM", "infantMort", "under5Mort", "healthExpPct", "skilledBirth"]);
+})();
+</script>
+</body>
+</html>

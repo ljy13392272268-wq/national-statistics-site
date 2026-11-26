@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Education — America in Numbers</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.png" type="image/png">
+<script src="data.js"></script>
+<script src="charts.js"></script>
+<script src="site.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">America <em>in Numbers</em></a>
+    <nav class="topnav">
+      <a href="index.html">Overview</a>
+      <a href="population.html">Population</a>
+      <a href="economy.html">Economy</a>
+      <a href="health.html">Health</a>
+      <a href="education.html">Education</a>
+      <a href="environment.html">Environment</a>
+      <a href="states.html">States</a>
+      <a href="data.html">Data table</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="kicker">Education</div>
+    <h1>Almost everyone goes to school — fewer go on to university</h1>
+    <p class="lede">Secondary enrolment was 97.5% in 2022, the latest year reported, and
+    primary enrolment 97.0%. Tertiary enrolment fell from 88.9% in 2015
+    to 79.4% in 2022. Government spending on education was 5.4% of GDP in
+    2021, and classes averaged about 14 pupils per teacher in 2017, the
+    last year the source reports.</p>
+    <p class="meta-line">Source: World Bank Open Data; enrolment last reported for 2022,
+    spending for 2021, pupil–teacher ratios for 2017.</p>
+  </section>
+
+  <section class="stats" aria-label="Key education figures">
+    <div class="stat" data-ind="tertiaryEnroll" data-fmt="pct1">
+      <div class="stat-label">Tertiary enrolment</div>
+      <div class="stat-value">—</div>
+      <div class="stat-sub">gross enrolment ratio</div>
+      <div class="stat-year"></div>
+    </div>
+    <div class="stat" data-ind="secondaryEnroll" data-fmt="pct1">
+      <div class="stat-label">Secondary enrolment</div>
+      <div class="stat-value">—</div>
+      <div class="stat-sub">gross enrolment ratio</div>
+      <div class="stat-year"></div>
+    </div>
+    <div class="stat" data-ind="primaryEnroll" data-fmt="pct1">
+      <div class="stat-label">Primary enrolment</div>
+      <div class="stat-value">—</div>
+      <div class="stat-sub">gross enrolment ratio</div>
+      <div class="stat-year"></div>
+    </div>
+    <div class="stat" data-ind="eduExpPct" data-fmt="pct1">
+      <div class="stat-label">Education spending</div>
+      <div class="stat-value">—</div>
+      <div class="stat-sub">government, share of GDP</div>
+      <div class="stat-year"></div>
+    </div>
+    <div class="stat" data-ind="pupilTeacherPrimary" data-fmt="num1">
+      <div class="stat-label">Pupils per teacher, primary</div>
+      <div class="stat-value">—</div>
+      <div class="stat-sub">primary schools</div>
+      <div class="stat-year"></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h3>The university slide</h3>
+    <p class="panel-sub">Gross tertiary enrolment, 2015–2022: from 88.9% to 79.4%. The
+    ratio counts all students enrolled against the population of the
+    typical university age, so it can exceed the share of one cohort.</p>
+    <div id="tertiary-chart"></div>
+    <p class="source-line">Source: World Bank Open Data, indicator SE.TER.ENRR, 2015–2022.</p>
+  </section>
+
+  <section class="panel">
+    <h3>Nearly every child in school</h3>
+    <p class="panel-sub">Gross enrolment in primary and secondary school, 2015–2022. Both
+    stayed near or above 97%, with secondary peaking above 100% in 2021 —
+    gross ratios count repeaters and over-age pupils, so they can pass
+    100%.</p>
+    <div id="school-chart"></div>
+    <p class="source-line">Source: World Bank Open Data, indicators SE.PRM.ENRR and
+    SE.SEC.ENRR, 2015–2022.</p>
+  </section>
+
+  <section class="section">
+    <h2>Education data</h2>
+    <p>Not every education series is reported every year. The table below
+    shows what the World Bank holds for the United States, with gaps left
+    blank rather than filled in.</p>
+    <div class="table-scroll" id="edu-table"></div>
+    <p class="source-line">Source: World Bank Open Data. Enrolment figures are last reported
+    for 2022; education spending for 2021; the pupil–teacher ratios for
+    2017.</p>
+  </section>
+
+  <div class="note"><strong>About the gaps.</strong> The World Bank holds no literacy
+  series for the United States, so this page does not show literacy — a
+  blank cell means the source has no value, not zero. What the source does
+  hold, this page shows in full.</div>
+
+  <footer>
+    <a class="to-top" href="#">Back to top ↑</a>
+    <p><strong>America in Numbers.</strong> National figures: World Bank Open Data,
+    2015–2024. Values are rounded for display only.</p>
+  </footer>
+</main>
+
+<script>
+(function () {
+  var S = window.SITE, C = window.CHARTS, D = window.USA;
+  S.markActiveNav();
+  S.fillStatCards(document);
+
+  C.lineChart(document.getElementById("tertiary-chart"), {
+    label: "School enrollment, tertiary, percent gross, 2015-2022",
+    series: [{ name: "Tertiary enrolment", values: D.INDICATORS.tertiaryEnroll.values, color: "#b3402a" }],
+    tickFormat: function (v) { return v.toFixed(0) + "%"; }
+  });
+  C.lineChart(document.getElementById("school-chart"), {
+    label: "School enrollment, primary and secondary, percent gross, 2015-2022",
+    series: [
+      { name: "Primary", values: D.INDICATORS.primaryEnroll.values, color: "#1f6f6b" },
+      { name: "Secondary", values: D.INDICATORS.secondaryEnroll.values, color: "#4a6fa5" }
+    ],
+    tickFormat: function (v) { return v.toFixed(0) + "%"; }
+  });
+
+  S.seriesTable(document.getElementById("edu-table"),
+    ["tertiaryEnroll", "secondaryEnroll", "primaryEnroll", "eduExpPct", "pupilTeacherPrimary", "pupilTeacherSecondary"]);
+})();
+</script>
+</body>
+</html>

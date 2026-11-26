@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>States — America in Numbers</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.png" type="image/png">
+<script src="data.js"></script>
+<script src="charts.js"></script>
+<script src="site.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">America <em>in Numbers</em></a>
+    <nav class="topnav">
+      <a href="index.html">Overview</a>
+      <a href="population.html">Population</a>
+      <a href="economy.html">Economy</a>
+      <a href="health.html">Health</a>
+      <a href="education.html">Education</a>
+      <a href="environment.html">Environment</a>
+      <a href="states.html">States</a>
+      <a href="data.html">Data table</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="kicker">States</div>
+    <h1>50 states, side by side</h1>
+    <p class="lede">California's economy ($4.05 trillion in 2024) is 87 times Vermont's
+    ($0.05 trillion). New York makes $114,950 per person; Mississippi
+    makes $53,420. Compare every state on GDP, population and GDP per
+    person — sort the table, or search for a state by name.</p>
+    <p class="meta-line">GDP 2024 · Population: 2020 Decennial Census ·
+    Sources: U.S. Bureau of Economic Analysis and U.S. Census Bureau.</p>
+  </section>
+
+  <section class="panel">
+    <h3>The top ten by GDP</h3>
+    <p class="panel-sub">Switch the ranking to see the same states ordered by population
+    or by GDP per person.</p>
+    <div class="chart-switch" role="group" aria-label="Rank states by">
+      <button type="button" data-metric="gdp" aria-pressed="true">GDP</button>
+      <button type="button" data-metric="pop" aria-pressed="false">Population</button>
+      <button type="button" data-metric="gdppc" aria-pressed="false">GDP per person</button>
+    </div>
+    <div id="state-chart"></div>
+    <p class="source-line" id="state-chart-source">GDP 2024, billion USD. Source: U.S.
+    Bureau of Economic Analysis.</p>
+  </section>
+
+  <section class="section">
+    <h2>All 50 states</h2>
+    <div class="toolbar">
+      <input type="search" id="state-search" placeholder="Search a state — try “Texas”" aria-label="Search states">
+    </div>
+    <div class="table-scroll">
+      <table class="data-table" id="state-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th data-sort="name">State</th>
+            <th class="num" data-sort="gdp">GDP 2024 (billion USD)</th>
+            <th class="num" data-sort="pop">Population 2020</th>
+            <th class="num" data-sort="gdppc">GDP per person (USD)</th>
+            <th class="num" data-sort="share">Share of state GDP</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="source-line">GDP: U.S. Bureau of Economic Analysis, 2024 (as listed on
+    Wikipedia's state GDP list). Population: 2020 Decennial Census
+    (U.S. Census Bureau). The District of Columbia is not a state and is
+    not in this table.</p>
+  </section>
+
+  <div class="note"><strong>About GDP per person.</strong> It divides 2024 GDP by the 2020
+  census population, so treat it as indicative rather than exact — the two
+  figures come from different years. State GDP sums to $28.95 trillion,
+  slightly below the national $29.30 trillion: state and national accounts
+  are compiled separately and never add up exactly.</div>
+
+  <footer>
+    <a class="to-top" href="#">Back to top ↑</a>
+    <p><strong>America in Numbers.</strong> State figures: U.S. Bureau of Economic
+    Analysis and U.S. Census Bureau. Values are rounded for display only.</p>
+  </footer>
+</main>
+
+<script>
+(function () {
+  var S = window.SITE, C = window.CHARTS, D = window.USA;
+  S.markActiveNav();
+
+  var totalGdp = D.STATES.reduce(function (a, s) { return a + s.gdp2024; }, 0);
+  var rows = D.STATES.map(function (s) {
+    return {
+      name: s.name,
+      gdp: s.gdp2024,
+      pop: s.pop2020,
+      gdppc: Math.round((s.gdp2024 * 1000000) / s.pop2020),
+      share: (s.gdp2024 / totalGdp) * 100
+    };
+  });
+  rows.sort(function (a, b) { return b.gdp - a.gdp; });
+
+  var tbody = document.querySelector("#state-table tbody");
+  rows.forEach(function (r, i) {
+    var tr = document.createElement("tr");
+    tr.setAttribute("data-name", r.name.toLowerCase());
+    tr.setAttribute("data-gdp", String(r.gdp));
+    tr.setAttribute("data-pop", String(r.pop));
+    tr.setAttribute("data-gdppc", String(r.gdppc));
+    tr.setAttribute("data-share", String(r.share));
+    tr.innerHTML = "<td class=\"rank\">" + (i + 1) + "</td><td><strong>" + r.name +
+      "</strong></td><td class=\"num\">" + S.fmtUsdBillion(r.gdp) +
+      "</td><td class=\"num\">" + S.fmtInt(r.pop) +
+      "</td><td class=\"num\">" + S.fmtInt(r.gdppc) +
+      "</td><td class=\"num\">" + r.share.toFixed(2) + "%</td>";
+    tbody.appendChild(tr);
+  });
+
+  var table = document.getElementById("state-table");
+  S.enableSorting(table);
+  S.enableFilter(document.getElementById("state-search"), table);
+
+  var METRICS = {
+    gdp: { label: "GDP 2024, billion USD", fmt: function (v) { return Math.round(v / 1000).toLocaleString("en-US"); }, source: "GDP 2024, billion USD. Source: U.S. Bureau of Economic Analysis." },
+    pop: { label: "Population 2020", fmt: function (v) { return (v / 1000000).toFixed(1) + "M"; }, source: "Population, 2020 Decennial Census. Source: U.S. Census Bureau." },
+    gdppc: { label: "GDP per person, USD", fmt: function (v) { return Math.round(v).toLocaleString("en-US"); }, source: "GDP per person, USD (2024 GDP divided by 2020 census population). Sources: U.S. Bureau of Economic Analysis and U.S. Census Bureau." }
+  };
+  function drawChart(metric) {
+    var m = METRICS[metric];
+    var sorted = rows.slice().sort(function (a, b) { return b[metric] - a[metric]; }).slice(0, 10);
+    C.hBarChart(document.getElementById("state-chart"), {
+      label: "Top ten states by " + m.label,
+      rows: sorted.map(function (r) { return { label: r.name, value: r[metric] }; }),
+      color: "#b3402a",
+      tickFormat: m.fmt
+    });
+    document.getElementById("state-chart-source").textContent = m.source;
+  }
+  document.querySelectorAll("[data-metric]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      document.querySelectorAll("[data-metric]").forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
+      btn.setAttribute("aria-pressed", "true");
+      drawChart(btn.getAttribute("data-metric"));
+    });
+  });
+  drawChart("gdp");
+})();
+</script>
+</body>
+</html>
