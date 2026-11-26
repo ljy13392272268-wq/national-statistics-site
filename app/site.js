@@ -1,6 +1,7 @@
-// America in Numbers — shared page helpers: number formatting, stat cards,
-// data tables, sorting and filtering. Every figure on the site is rendered
-// from data.js, so the page and the charts can never disagree.
+// America in Numbers — shared page chrome and number formatting: the units
+// every page prints a figure in, the stat cards, and the active nav link.
+// Tables, sorting and the CSV download live in tables.js, which only the
+// pages that show a table load.
 
 // --- formatting -------------------------------------------------------------
 function fmtInt(v) {
@@ -54,19 +55,33 @@ function changeSinceStart(key) {
 }
 
 // --- stat cards -------------------------------------------------------------
-// Fill a stat card: <div class="stat" data-ind="population" data-fmt="billionPeople">
-// The card's .stat-value and .stat-year are filled from data.js.
+// Fill a stat card: <div class="stat" data-ind="population" data-fmt="millionPeople">
+// The card's .stat-value and .stat-year are filled from the data; a small
+// sparkline of the whole series is drawn behind the label when charts.js is
+// loaded, so a card shows both the latest value and its ten-year path.
 function fillStatCards(root) {
   const scope = root || document;
   scope.querySelectorAll("[data-ind]").forEach((card) => {
     const key = card.getAttribute("data-ind");
     const fmtName = card.getAttribute("data-fmt") || "auto";
+    const ind = window.USA.INDICATORS[key];
+    if (!ind) return;
     const latest = latestOf(key);
     const valueEl = card.querySelector(".stat-value");
     const yearEl = card.querySelector(".stat-year");
     if (!valueEl) return;
     valueEl.textContent = formatValue(key, latest.value, fmtName);
     if (yearEl) yearEl.textContent = latest.year === null ? "no data" : String(latest.year);
+    if (window.CHARTS && window.CHARTS.sparkline) {
+      let spark = card.querySelector(".stat-spark");
+      if (!spark) {
+        spark = document.createElement("span");
+        spark.className = "stat-spark";
+        spark.setAttribute("aria-hidden", "true");
+        card.appendChild(spark);
+      }
+      spark.innerHTML = window.CHARTS.sparkline(ind.values, card.getAttribute("data-color") || "#b3402a");
+    }
   });
 }
 
@@ -94,116 +109,6 @@ function formatValue(key, value, fmtName) {
   }
 }
 
-// --- series tables ----------------------------------------------------------
-// Render a table of one indicator per row, years as columns, into el.
-function seriesTable(el, keys) {
-  const years = window.USA.YEARS;
-  let html = `<table class="data-table"><thead><tr><th>Indicator</th><th>Unit</th>`;
-  years.forEach((y) => { html += `<th class="num">${y}</th>`; });
-  html += `</tr></thead><tbody>`;
-  keys.forEach((key) => {
-    const ind = window.USA.INDICATORS[key];
-    // Show scaled units where the raw unit would mislead: population is
-    // shown in millions, GDP in US$ trillions.
-    let unitLabel = ind.unit;
-    if (key === "population") unitLabel = "million people";
-    if (key === "gdp") unitLabel = "US$ trillion";
-    html += `<tr><td>${ind.label}</td><td>${unitLabel}</td>`;
-    ind.values.forEach((v) => {
-      html += `<td class="num">${v === null ? "—" : fmtCell(ind, v)}</td>`;
-    });
-    html += `</tr>`;
-  });
-  html += `</tbody></table>`;
-  el.innerHTML = html;
-}
-
-function fmtCell(ind, v) {
-  if (ind.unit.indexOf("%") !== -1) return fmtNum(v, 2);
-  if (ind.unit === "people") return fmtNum(v / 1e6, 0);
-  if (ind.code === "NY.GDP.MKTP.CD") return fmtNum(v / 1e12, 2);
-  if (ind.unit === "current US$" || ind.unit === "current international $") return fmtNum(v, 0);
-  if (ind.unit === "years" || ind.unit === "births per woman") return fmtNum(v, 2);
-  return fmtNum(v, 2);
-}
-
-// --- table sorting and filtering -------------------------------------------
-// Make every th[data-sort] in a table clickable to sort that column.
-function enableSorting(table) {
-  const ths = table.querySelectorAll("th[data-sort]");
-  ths.forEach((th) => {
-    th.classList.add("sortable");
-    th.addEventListener("click", () => {
-      const key = th.getAttribute("data-sort");
-      const firstRow = table.querySelector("tbody tr");
-      const firstVal = firstRow ? firstRow.getAttribute("data-" + key) : null;
-      const numeric = firstVal !== null && firstVal !== "" && !isNaN(parseFloat(firstVal));
-      const current = th.getAttribute("data-dir");
-      // First click: numbers sort largest-first, text sorts A-first.
-      // Later clicks just flip the direction.
-      const asc = current === "asc" ? false : current === "desc" ? true : !numeric;
-      table.querySelectorAll("th[data-sort]").forEach((o) => o.removeAttribute("data-dir"));
-      th.setAttribute("data-dir", asc ? "asc" : "desc");
-      sortTableBody(table, key, asc);
-    });
-  });
-}
-
-function sortTableBody(table, key, asc) {
-  const tbody = table.querySelector("tbody");
-  const rows = Array.from(tbody.querySelectorAll("tr"));
-  rows.sort((a, b) => {
-    const av = parseFloat(a.getAttribute("data-" + key) || "0");
-    const bv = parseFloat(b.getAttribute("data-" + key) || "0");
-    if (!isNaN(av) && !isNaN(bv)) return asc ? av - bv : bv - av;
-    const as = (a.getAttribute("data-" + key) || "").toLowerCase();
-    const bs = (b.getAttribute("data-" + key) || "").toLowerCase();
-    return asc ? as.localeCompare(bs) : bs.localeCompare(as);
-  });
-  rows.forEach((r, i) => {
-    r.querySelector(".rank").textContent = String(i + 1);
-    tbody.appendChild(r);
-  });
-}
-
-// Live-filter rows of a table by a text input: rows whose text (or their
-// data-keywords) lacks the query are hidden.
-function enableFilter(input, table) {
-  input.addEventListener("input", () => {
-    const q = input.value.trim().toLowerCase();
-    table.querySelectorAll("tbody tr").forEach((row) => {
-      const haystack = (row.textContent + " " + (row.getAttribute("data-keywords") || "")).toLowerCase();
-      row.style.display = haystack.includes(q) ? "" : "none";
-    });
-  });
-}
-
-// --- CSV download -----------------------------------------------------------
-// Build a CSV of every national indicator from data.js and download it.
-// The file is generated in the browser from the site's own data; no request.
-function downloadCsv() {
-  const years = window.USA.YEARS;
-  const lines = ["indicator,unit," + years.join(",")];
-  Object.keys(window.USA.INDICATORS).forEach((key) => {
-    const ind = window.USA.INDICATORS[key];
-    const cells = ind.values.map((v) => (v === null ? "" : String(v)));
-    lines.push(`"${ind.label}","${ind.unit}",${cells.join(",")}`);
-  });
-  lines.push("");
-  lines.push("States: name,GDP 2024 (million USD),population 2020 (census)");
-  window.USA.STATES.forEach((s) => {
-    lines.push(`"${s.name}",${s.gdp2024},${s.pop2020}`);
-  });
-  const blob = new Blob([lines.join("\n")], { type: "text/csv;charset=utf-8" });
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "america-statistics.csv";
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-}
-
 // --- navigation -------------------------------------------------------------
 // Mark the current page's nav link as active.
 function markActiveNav() {
@@ -213,4 +118,4 @@ function markActiveNav() {
   });
 }
 
-window.SITE = { fmtInt, fmtNum, fmtPct, fmtUsdTrillion, fmtUsd, fmtBillionPeople, fmtMillionPeople, fmtUsdBillion, latestOf, changeSinceStart, fillStatCards, formatValue, seriesTable, enableSorting, enableFilter, downloadCsv, markActiveNav };
+window.SITE = { fmtInt, fmtNum, fmtPct, fmtUsdTrillion, fmtUsd, fmtBillionPeople, fmtMillionPeople, fmtUsdBillion, latestOf, changeSinceStart, fillStatCards, formatValue, markActiveNav };

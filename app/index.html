@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>America in Numbers — National Statistics of the United States</title>
+<meta name="description" content="Ten years of official U.S. statistics: population, economy, health, education, environment and all 50 states, each figure with its source and year.">
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="favicon.png" type="image/png">
 <script src="data-overview.js"></script>
@@ -28,15 +29,14 @@
 </header>
 
 <main class="wrap">
-  <section class="hero">
-    <div class="kicker">National Statistics · United States</div>
+  <section class="masthead">
+    <div class="masthead-top">
+      <div class="kicker">National Statistics · United States</div>
+      <div class="dateline">2015–2024 · 40 indicators · 50 states</div>
+    </div>
     <h1>America in Numbers</h1>
-    <p class="lede">The country, measured: how many people live here, what the economy
-    produces, how long people live, what children learn, and what the air
-    and land look like — ten years of official figures, each with its source
-    and year, on one site.</p>
-    <p class="meta-line">National series 2015–2024 · Source: World Bank Open Data ·
-    State figures: U.S. Bureau of Economic Analysis and U.S. Census Bureau</p>
+    <p class="lede">Population, economy, health, education and environment: ten years
+    of official United States figures, each with its source and year.</p>
   </section>
 
   <section class="stats" aria-label="Key figures">
@@ -45,82 +45,73 @@
       <div class="stat-value">—</div>
       <div class="stat-sub">people</div>
       <div class="stat-year"></div>
-      <div class="stat-source">World Bank Open Data</div>
+      <div class="stat-source">World Bank</div>
     </div>
     <div class="stat" data-ind="gdp" data-fmt="usdTrillion">
       <div class="stat-label">GDP</div>
       <div class="stat-value">—</div>
-      <div class="stat-sub">current US dollars</div>
+      <div class="stat-sub">current US$</div>
       <div class="stat-year"></div>
-      <div class="stat-source">World Bank Open Data</div>
+      <div class="stat-source">World Bank</div>
     </div>
     <div class="stat" data-ind="gdpPc" data-fmt="usd">
       <div class="stat-label">GDP per capita</div>
       <div class="stat-value">—</div>
-      <div class="stat-sub">current US dollars</div>
+      <div class="stat-sub">current US$</div>
       <div class="stat-year"></div>
-      <div class="stat-source">World Bank Open Data</div>
+      <div class="stat-source">World Bank</div>
     </div>
     <div class="stat" data-ind="lifeExp" data-fmt="num1">
       <div class="stat-label">Life expectancy</div>
       <div class="stat-value">—</div>
       <div class="stat-sub">years at birth</div>
       <div class="stat-year"></div>
-      <div class="stat-source">World Bank Open Data</div>
+      <div class="stat-source">World Bank</div>
     </div>
     <div class="stat" data-ind="urbanPct" data-fmt="pct1">
       <div class="stat-label">Urban population</div>
       <div class="stat-value">—</div>
-      <div class="stat-sub">share of total population</div>
+      <div class="stat-sub">share of population</div>
       <div class="stat-year"></div>
-      <div class="stat-source">World Bank Open Data</div>
+      <div class="stat-source">World Bank</div>
     </div>
-    <div class="stat" data-ind="co2Pc" data-fmt="num1">
-      <div class="stat-label">CO2 emissions per capita</div>
+    <div class="stat" data-ind="co2Pc" data-fmt="num1" data-color="#1f6f6b">
+      <div class="stat-label">CO2 per capita</div>
       <div class="stat-value">—</div>
-      <div class="stat-sub">tonnes CO2e per person</div>
+      <div class="stat-sub">tonnes CO2e/person</div>
       <div class="stat-year"></div>
-      <div class="stat-source">World Bank Open Data</div>
-    </div>
-    <div class="stat" data-ind="unemployment" data-fmt="pct1">
-      <div class="stat-label">Unemployment</div>
-      <div class="stat-value">—</div>
-      <div class="stat-sub">% of total labor force</div>
-      <div class="stat-year"></div>
-      <div class="stat-source">World Bank Open Data</div>
-    </div>
-    <div class="stat" data-ind="internetPct" data-fmt="pct1">
-      <div class="stat-label">Internet users</div>
-      <div class="stat-value">—</div>
-      <div class="stat-sub">% of population</div>
-      <div class="stat-year"></div>
-      <div class="stat-source">World Bank Open Data</div>
-    </div>
-    <div class="stat" data-ind="fertility" data-fmt="num2">
-      <div class="stat-label">Fertility rate</div>
-      <div class="stat-value">—</div>
-      <div class="stat-sub">births per woman</div>
-      <div class="stat-year"></div>
-      <div class="stat-source">World Bank Open Data</div>
+      <div class="stat-source">World Bank</div>
     </div>
   </section>
+  <p class="stats-note">Key figures: World Bank Open Data · year shown on each card.</p>
 
-  <section class="panel">
-    <h3>Ten years at a glance</h3>
-    <p class="panel-sub">Pick an indicator to draw its 2015–2024 line. The numbers are the
-    World Bank series, exactly as published.</p>
-    <div class="chart-switch">
-      <label for="metric">Indicator</label>
-      <select id="metric">
-        <option value="population">Population</option>
-        <option value="urbanPct">Urban population (%)</option>
-        <option value="lifeExp">Life expectancy (years)</option>
-        <option value="gdpPc">GDP per capita (US$)</option>
-      </select>
+  <section class="panel panel-chart">
+    <div class="panel-head">
+      <h3>Ten years at a glance</h3>
+      <div class="chart-switch">
+        <label for="metric">Indicator</label>
+        <select id="metric">
+          <option value="population">Population</option>
+          <option value="urbanPct">Urban population (%)</option>
+          <option value="lifeExp">Life expectancy (years)</option>
+          <option value="gdpPc">GDP per capita (US$)</option>
+        </select>
+      </div>
     </div>
     <div id="trend-chart"></div>
     <p class="source-line" id="trend-caption"></p>
     <p class="source-line">Source: World Bank Open Data, 2015–2024.</p>
+  </section>
+
+  <section class="section">
+    <h2>At a glance</h2>
+    <p>Latest value of each headline indicator, and how far it has moved since 2015. Change is in percentage points for rates and shares, and percent change otherwise.</p>
+    <div class="table-scroll">
+      <table class="data-table" id="glance-table">
+        <thead><tr><th>Indicator</th><th>Latest</th><th>Year</th><th>Change since 2015</th><th>Source</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
   </section>
 
   <section class="panel">
@@ -141,17 +132,6 @@
   </section>
 
   <section class="section">
-    <h2>At a glance</h2>
-    <p>Latest value of each headline indicator, and how far it has moved since 2015.</p>
-    <div class="table-scroll">
-      <table class="data-table" id="glance-table">
-        <thead><tr><th>Indicator</th><th>Latest</th><th>Year</th><th>Change since 2015</th><th>Source</th></tr></thead>
-        <tbody></tbody>
-      </table>
-    </div>
-  </section>
-
-  <section class="section">
     <h2>Explore the sections</h2>
     <div class="link-grid">
       <a class="link-card" href="population.html"><h3>Population</h3><p>How many people, how old they are, where they live, and how fast the population is changing.</p><span class="go">Open population →</span></a>
@@ -160,7 +140,31 @@
       <a class="link-card" href="education.html"><h3>Education</h3><p>Who goes to university, who goes to school, and what the government spends on education.</p><span class="go">Open education →</span></a>
       <a class="link-card" href="environment.html"><h3>Environment</h3><p>Carbon, forests, clean air and renewable energy — the state of the land and sky.</p><span class="go">Open environment →</span></a>
       <a class="link-card" href="states.html"><h3>States</h3><p>All 50 states compared: GDP, population and GDP per person.</p><span class="go">Open states →</span></a>
-      <a class="link-card" href="data.html"><h3>Data table</h3><p>Every indicator in one table, with its unit, source and year — and a CSV download.</p><span class="go">Open data table →</span></a>
+      <a class="link-card link-card-wide" href="data.html"><h3>Data table</h3><p>Every indicator in one table, with its unit, source and year — and a CSV download.</p><span class="go">Open data table →</span></a>
+    </div>
+  </section>
+
+  <section class="section about">
+    <h2>About the data</h2>
+    <div class="about-grid">
+      <div>
+        <h3>National series</h3>
+        <p>World Bank Open Data, country USA, 2015–2024. The latest year differs by
+        series: enrolment and education spending stop in 2021–2022, health
+        spending in 2023, PM2.5 in 2023. A dash means the source reports no
+        value — not zero.</p>
+      </div>
+      <div>
+        <h3>State figures</h3>
+        <p>GDP: U.S. Bureau of Economic Analysis, 2024. Population: 2020
+        Decennial Census, U.S. Census Bureau. GDP per person divides 2024 GDP
+        by 2020 population, so treat it as indicative.</p>
+      </div>
+      <div>
+        <h3>Display and sources</h3>
+        <p>Values are rounded for display only; the CSV download carries the full
+        figures. Every chart names its indicator code and years beneath it.</p>
+      </div>
     </div>
   </section>
 
@@ -169,8 +173,7 @@
     <p><strong>America in Numbers.</strong> An independent statistics site. National
     figures: World Bank Open Data, 2015–2024. State figures: U.S. Bureau of
     Economic Analysis (GDP 2024) and U.S. Census Bureau (2020 Decennial
-    Census). All figures are shown with their source and year; values
-    are rounded for display only.</p>
+    Census). Compiled 26 November 2026.</p>
   </footer>
 </main>
 
@@ -186,6 +189,10 @@
     lifeExp: { name: "Life expectancy, years", fmt: function (v) { return v.toFixed(0); } },
     gdpPc: { name: "GDP per capita, US$", fmt: function (v) { return "$" + Math.round(v).toLocaleString("en-US"); } }
   };
+  var GLANCE_FMT = { fertility: "num2" };
+  function unitLabel(ind) {
+    return ind.unit.replace(/^%\s*/, "");
+  }
   function drawTrend(key) {
     var ind = D.INDICATORS[key];
     C.lineChart(document.getElementById("trend-chart"), {
@@ -196,7 +203,7 @@
     var latest = S.latestOf(key);
     document.getElementById("trend-caption").textContent =
       ind.label + ": latest " + S.formatValue(key, latest.value, "auto") + " " +
-      ind.unit + " (" + latest.year + ").";
+      unitLabel(ind) + " (" + latest.year + ").";
   }
   var select = document.getElementById("metric");
   select.addEventListener("change", function () { drawTrend(select.value); });
@@ -227,11 +234,18 @@
     var ind = D.INDICATORS[key];
     var latest = S.latestOf(key);
     var change = S.changeSinceStart(key);
-    var changeText = change === null ? "—" : (change.pct >= 0 ? "+" : "") + change.pct.toFixed(1) + "%";
+    var changeText = "—", tone = "", delta = 0;
+    if (change !== null) {
+      delta = change.to - change.from;
+      changeText = ind.unit.indexOf("%") !== -1
+        ? (delta >= 0 ? "+" : "") + delta.toFixed(1) + " pts"
+        : (change.pct >= 0 ? "+" : "") + change.pct.toFixed(1) + "%";
+      tone = delta >= 0 ? " up" : " down";
+    }
     var tr = document.createElement("tr");
     tr.innerHTML = "<td>" + ind.label + "</td><td class=\"num\"><strong>" +
-      S.formatValue(key, latest.value, "auto") + "</strong> " + ind.unit +
-      "</td><td class=\"num\">" + latest.year + "</td><td class=\"num\">" + changeText +
+      S.formatValue(key, latest.value, GLANCE_FMT[key] || "auto") + "</strong> " + unitLabel(ind) +
+      "</td><td class=\"num\">" + latest.year + "</td><td class=\"num" + tone + "\">" + changeText +
       "</td><td>World Bank</td>";
     tbody.appendChild(tr);
   });

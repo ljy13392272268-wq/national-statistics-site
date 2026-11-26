@@ -9,6 +9,7 @@
 <script src="data.js"></script>
 <script src="charts.js"></script>
 <script src="site.js"></script>
+<script src="tables.js"></script>
 </head>
 <body>
 <header class="topbar">
@@ -102,6 +103,8 @@
     unemployment: "jobs jobless"
   };
 
+  // Keep the table's precision in step with the section pages.
+  var FMT = { popGrowth: "pct2", fertility: "num2", cpi: "pct2" };
   var tbody = document.querySelector("#full-table tbody");
   Object.keys(D.INDICATORS).forEach(function (key) {
     var ind = D.INDICATORS[key];
@@ -121,28 +124,42 @@
     tr.setAttribute("data-section", sectionOf[key] || "all");
     if (KEYWORDS[key]) tr.setAttribute("data-keywords", KEYWORDS[key]);
     tr.innerHTML = "<td><strong>" + ind.label + "</strong></td><td>" + ind.unit +
-      "</td><td class=\"num\"><strong>" + S.formatValue(key, latest.value, "auto") +
+      "</td><td class=\"num\"><strong>" + S.formatValue(key, latest.value, FMT[key] || "auto") +
       "</strong></td><td class=\"num\">" + (latest.year === null ? "—" : latest.year) +
-      "</td><td class=\"num\">" + (first === null || first === undefined ? "—" : S.formatValue(key, first, "auto")) +
+      "</td><td class=\"num\">" + (first === null || first === undefined ? "—" : S.formatValue(key, first, FMT[key] || "auto")) +
       "</td><td class=\"num\">" + change + "</td><td>World Bank</td>";
     tbody.appendChild(tr);
   });
 
   var table = document.getElementById("full-table");
-  S.enableFilter(document.getElementById("data-search"), table);
-  document.getElementById("data-count").textContent =
-    Object.keys(D.INDICATORS).length + " indicators shown.";
+  var search = document.getElementById("data-search");
+  var count = document.getElementById("data-count");
+  var total = Object.keys(D.INDICATORS).length;
+  var activeSection = "all";
+  // Section filter and search combine: a row shows only when it belongs to
+  // the chosen section and its text (or keywords) matches the query.
+  function applyFilters() {
+    var q = search.value.trim().toLowerCase();
+    var shown = 0;
+    table.querySelectorAll("tbody tr").forEach(function (row) {
+      var inSection = activeSection === "all" || row.getAttribute("data-section") === activeSection;
+      var hay = (row.textContent + " " + (row.getAttribute("data-keywords") || "")).toLowerCase();
+      var show = inSection && hay.indexOf(q) !== -1;
+      row.style.display = show ? "" : "none";
+      if (show) shown += 1;
+    });
+    count.textContent = shown + " of " + total + " indicators shown.";
+  }
+  search.addEventListener("input", applyFilters);
   document.querySelectorAll("[data-section]").forEach(function (btn) {
     btn.addEventListener("click", function () {
-      var sec = btn.getAttribute("data-section");
+      activeSection = btn.getAttribute("data-section");
       document.querySelectorAll("[data-section]").forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
       btn.setAttribute("aria-pressed", "true");
-      table.querySelectorAll("tbody tr").forEach(function (row) {
-        row.style.display = (sec === "all" || row.getAttribute("data-section") === sec) ? "" : "none";
-      });
-      document.getElementById("data-search").value = "";
+      applyFilters();
     });
   });
+  applyFilters();
   document.getElementById("download-csv").addEventListener("click", S.downloadCsv);
 })();
 </script>
