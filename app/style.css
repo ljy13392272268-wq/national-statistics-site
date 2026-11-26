@@ -1,5 +1,5 @@
 /* America in Numbers: warm paper, ink type, one vermilion accent, system
-   fonts only, no external asset — the site works with no network. */
+   fonts, no external asset; the site works with no network. */
 
 :root {
   --paper: #faf7f1;
@@ -109,13 +109,13 @@ a:hover { text-decoration: underline; }
 .masthead h1 { font-size: 38px; line-height: 1.05; margin: 6px 0 4px; }
 .masthead .lede { font-size: 17.5px; line-height: 1.45; color: var(--ink-soft); margin: 0; }
 
-/* Section pages keep the older hero, tightened: at 1280x800 the first chart
-   below the cards now fits whole, so a section reads in one screen. */
-.hero { padding: 12px 0 2px; }
-.hero .kicker { margin-bottom: 4px; }
-.hero h1 { font-size: 33px; margin-bottom: 4px; }
-.hero p.lede { font-size: 17px; color: var(--ink-soft); max-width: 780px; line-height: 1.42; }
-.hero .meta-line { color: var(--muted); font-size: 13.5px; margin-top: 4px; }
+/* Section pages keep the older hero, tightened so the first chart below the
+   cards fits whole at 1280x800. */
+.hero { padding: 9px 0 0; }
+.hero .kicker { margin-bottom: 3px; }
+.hero h1 { font-size: 33px; margin-bottom: 3px; }
+.hero p.lede { font-size: 17px; color: var(--ink-soft); max-width: 780px; line-height: 1.42; margin: 0 0 3px; }
+.hero .meta-line { color: var(--muted); font-size: 13.5px; margin-top: 0; }
 
 .section { margin-top: 36px; }
 .section > h2 { font-size: 27px; border-bottom: 3px solid var(--accent); padding-bottom: 6px; }
@@ -136,7 +136,7 @@ a:hover { text-decoration: underline; }
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 9px;
-  margin: 9px 0 2px;
+  margin: 7px 0 0;
 }
 .stat {
   display: block;
@@ -167,7 +167,7 @@ a.stat::after { content: "→"; position: absolute; right: 12px; bottom: 7px; co
   opacity: 0.9;
   pointer-events: none;
 }
-.stat-spark svg { display: block; width: 100%; height: 100%; }
+.stat-spark svg { width: 100%; height: 100%; }
 .stats-note { display: none; }
 
 /* --- chart panels -------------------------------------------------------- */
@@ -176,11 +176,11 @@ a.stat::after { content: "→"; position: absolute; right: 12px; bottom: 7px; co
   border: 1px solid var(--line);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: 9px 16px;
+  padding: 8px 16px;
   margin: 9px 0;
 }
 .panel h3 { font-size: 20px; margin-bottom: 2px; }
-.panel .panel-sub { color: var(--ink-soft); font-size: 14.5px; margin: 0 0 6px; }
+.panel .panel-sub { color: var(--ink-soft); font-size: 14.5px; margin: 0 0 4px; }
 .panel-head {
   display: flex;
   align-items: center;
@@ -194,7 +194,7 @@ a.stat::after { content: "→"; position: absolute; right: 12px; bottom: 7px; co
 .chart-legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
 .chart-switch { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 .chart-switch label { font-weight: 600; font-size: 14px; }
-select, input[type="text"], input[type="search"] {
+select, input[type="search"] {
   font: inherit;
   font-size: 14.5px;
   padding: 6px 10px;
@@ -224,7 +224,8 @@ button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); 
 /* --- link cards ---------------------------------------------------------- */
 .link-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 16px 0; }
 .link-card {
-  display: block;
+  display: flex;
+  flex-direction: column;
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: 12px;
@@ -235,7 +236,7 @@ button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); 
 .link-card:hover { text-decoration: none; border-color: var(--accent); }
 .link-card h3 { font-size: 19px; margin-bottom: 4px; }
 .link-card p { margin: 0; color: var(--ink-soft); font-size: 14.5px; }
-.link-card .go { color: var(--accent); font-weight: 700; font-size: 13.5px; margin-top: 10px; display: block; }
+.link-card .go { color: var(--accent); font-weight: 700; font-size: 13.5px; margin-top: auto; padding-top: 10px; }
 .link-card-wide {
   grid-column: 1 / -1;
   display: grid;
@@ -245,7 +246,7 @@ button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); 
   align-items: center;
 }
 .link-card-wide h3, .link-card-wide p { grid-column: 1; }
-.link-card-wide .go { grid-column: 2; grid-row: 1 / 3; margin-top: 0; }
+.link-card-wide .go { grid-column: 2; grid-row: 1 / 3; margin-top: 0; padding-top: 0; }
 
 /* --- about grid ---------------------------------------------------------- */
 .about { margin-top: 40px; }

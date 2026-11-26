@@ -36,7 +36,7 @@ function chartSvgOpen(width, height, label) {
 function lineChart(el, opts) {
   const years = window.USA.YEARS;
   const W = chartWidth(el);
-  const H = W < 560 ? 216 : 238;
+  const H = W < 560 ? 216 : 214;
   const L = W < 560 ? 52 : 64, R = 14, T = 16, B = 32;
   const fs = W < 560 ? 11 : 12;
   const all = opts.series.flatMap((s) => s.values.filter((v) => v !== null));
@@ -108,7 +108,7 @@ function lineChart(el, opts) {
 function barChart(el, opts) {
   const years = window.USA.YEARS;
   const W = chartWidth(el);
-  const H = W < 560 ? 216 : 238;
+  const H = W < 560 ? 216 : 214;
   const L = W < 560 ? 52 : 64, R = 14, T = 16, B = 32;
   const fs = W < 560 ? 11 : 12;
   const vals = opts.values.filter((v) => v !== null);
